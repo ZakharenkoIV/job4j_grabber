@@ -3,12 +3,6 @@ language: java
 jdk:
   - openjdk13
 
-services:
-  - postgresql
-
-before_install:
-  - psql -c 'create database tracker;' -U postgres
-
 after_success:
   - bash <(curl -s https://codecov.io/bash)
 
