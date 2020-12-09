@@ -38,7 +38,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> <!--checkstyle v2.17-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
@@ -57,7 +57,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin> <!--jacoco v0.8.5-->
         </plugins>
     </build>
 </project>
