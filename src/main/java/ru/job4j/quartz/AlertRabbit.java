@@ -14,7 +14,8 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class AlertRabbit {
     public static void main(String[] args) {
         Properties property = new Properties();
-        try (FileInputStream propertyFile = new FileInputStream("src/main/resources/rabbit.properties")) {
+        try {
+            FileInputStream propertyFile = new FileInputStream("src/main/resources/rabbit.properties");
             property.load(propertyFile);
             int sec = Integer.parseInt(property.getProperty("rabbit.interval"));
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
