@@ -14,10 +14,13 @@ import static org.quartz.TriggerBuilder.newTrigger;
 public class AlertRabbit {
     public static void main(String[] args) {
         Properties property = new Properties();
-        try {
-            FileInputStream propertyFile = new FileInputStream("src/main/resources/rabbit.properties");
+        try (FileInputStream propertyFile = new FileInputStream("src/main/resources/rabbit.properties")) {
             property.load(propertyFile);
-            int sec = Integer.parseInt(property.getProperty("rabbit.interval"));
+        } catch (IOException sse) {
+            sse.printStackTrace();
+        }
+        int sec = Integer.parseInt(property.getProperty("rabbit.interval"));
+        try {
             Scheduler scheduler = StdSchedulerFactory.getDefaultScheduler();
             scheduler.start();
             JobDetail job = newJob(Rabbit.class).build();
@@ -29,7 +32,7 @@ public class AlertRabbit {
                     .withSchedule(times)
                     .build();
             scheduler.scheduleJob(job, trigger);
-        } catch (SchedulerException | IOException se) {
+        } catch (SchedulerException se) {
             se.printStackTrace();
         }
     }
