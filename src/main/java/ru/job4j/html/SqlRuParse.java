@@ -8,6 +8,17 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 
 public class SqlRuParse {
+    public Post fillThePost(Post post, String linkToPost) throws IOException {
+        Document doc = Jsoup.connect(linkToPost).get();
+        Elements trElements = doc.select("#content-wrapper-forum > table.msgTable > tbody");
+        post.setPostName(trElements.first().child(0).child(0).ownText());
+        post.setLink(linkToPost);
+        post.setAuthor(trElements.first().child(1).child(0).child(0).text());
+        post.setText(trElements.first().child(1).child(1).text());
+        post.setDate(trElements.first().child(2).child(0).ownText().split("\\[")[0]);
+        return new Post();
+    }
+
     public void parse(int firstPage, int lastPage) throws IOException {
         int page = firstPage;
         String reference = "https://www.sql.ru/forum/job-offers/" + page;
@@ -40,8 +51,6 @@ public class SqlRuParse {
         return newReference;
     }
 
-
-    public static void main(String[] args) throws Exception {
-        new SqlRuParse().parse(1, 5);
+    public static void main(String[] args) {
     }
 }
