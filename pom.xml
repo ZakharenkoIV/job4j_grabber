@@ -45,7 +45,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>
-                <version>2.17</version>
+                <version>3.1.1</version>
                 <executions>
                     <execution>
                         <id>validate</id>
@@ -62,7 +62,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin> <!--checkstyle v2.17-->
+            </plugin> <!--checkstyle v3.1.1-->
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
