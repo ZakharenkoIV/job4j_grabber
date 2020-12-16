@@ -3,7 +3,6 @@ package ru.job4j.html;
 public class Post {
     private String postName;
     private String link;
-    private String author;
     private String text;
     private String date;
 
@@ -21,14 +20,6 @@ public class Post {
 
     public void setLink(String link) {
         this.link = link;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
     }
 
     public String getText() {

@@ -14,7 +14,6 @@ public class SqlRuParse {
         Elements trElements = doc.select("#content-wrapper-forum > table.msgTable > tbody");
         post.setPostName(trElements.first().child(0).child(0).ownText());
         post.setLink(linkToPost);
-        post.setAuthor(trElements.first().child(1).child(0).child(0).text());
         post.setText(trElements.first().child(1).child(1).text());
         post.setDate(trElements.first().child(2).child(0).ownText().split("\\[")[0]);
         return new Post();
