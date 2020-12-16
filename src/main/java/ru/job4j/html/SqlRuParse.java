@@ -6,41 +6,46 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Objects;
 
-public class SqlRuParse {
-    public Post fillThePost(Post post, String linkToPost) throws IOException {
-        Document doc = Jsoup.connect(linkToPost).get();
-        Elements trElements = doc.select("#content-wrapper-forum > table.msgTable > tbody");
-        post.setPostName(trElements.first().child(0).child(0).ownText());
-        post.setLink(linkToPost);
-        post.setText(trElements.first().child(1).child(1).text());
-        post.setDate(trElements.first().child(2).child(0).ownText().split("\\[")[0]);
-        return new Post();
-    }
+public class SqlRuParse implements Parse {
 
-    public void parse(int firstPage, int lastPage) {
-        int page = firstPage;
-        while (page <= lastPage) {
-            String url = "https://www.sql.ru/forum/job-offers/" + page++;
-            Document doc = null;
-            try {
-                doc = Jsoup.connect(url).get();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            Elements tdElements = Objects.requireNonNull(doc).select("#content-wrapper-forum > table.forumTable > tbody > tr:gt(0)");
-            for (Element td : tdElements) {
-                if (!td.child(1).text().startsWith("Важно:")) {
-                    System.out.println(td.child(1).child(0).attr("href"));
-                    System.out.println(td.child(1).child(0).text());
-                    System.out.println(td.child(5).text() + System.lineSeparator());
-                }
+    @Override
+    public List<Post> list(String link) {
+        List<Post> allPosts = new LinkedList<>();
+        Document doc = getDocument(link);
+        Elements tdElements = doc.select(
+                "#content-wrapper-forum > table.forumTable > tbody > tr:gt(0)");
+        for (Element td : tdElements) {
+            if (!td.child(1).text().startsWith("Важно:")) {
+                allPosts.add(detail(td.child(1).child(0).attr("href")));
             }
         }
+        return allPosts;
     }
 
-    public static void main(String[] args) {
-        new SqlRuParse().parse(1, 5);
+    @Override
+    public Post detail(String link) {
+        Post newPost = new Post();
+        Document doc = getDocument(link);
+        Elements trElements = doc.select(
+                "#content-wrapper-forum > table.msgTable > tbody");
+        newPost.setName(trElements.first().child(0).child(0).ownText());
+        newPost.setText(trElements.first().child(1).child(1).text());
+        newPost.setLink(link);
+        newPost.setCreated(trElements.first().child(2).child(0).ownText().split("\\[")[0]);
+        return newPost;
+    }
+
+    private Document getDocument(String link) {
+        Document doc = null;
+        try {
+            doc = Jsoup.connect(link).get();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return Objects.requireNonNull(doc);
     }
 }

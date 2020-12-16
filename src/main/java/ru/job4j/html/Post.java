@@ -1,17 +1,17 @@
 package ru.job4j.html;
 
 public class Post {
-    private String postName;
-    private String link;
+    private String name;
     private String text;
-    private String date;
+    private String link;
+    private String created;
 
-    public String getPostName() {
-        return postName;
+    public String getName() {
+        return name;
     }
 
-    public void setPostName(String postName) {
-        this.postName = postName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getLink() {
@@ -30,11 +30,11 @@ public class Post {
         this.text = text;
     }
 
-    public String getDate() {
-        return date;
+    public String getCreated() {
+        return created;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setCreated(String created) {
+        this.created = created;
     }
 }
