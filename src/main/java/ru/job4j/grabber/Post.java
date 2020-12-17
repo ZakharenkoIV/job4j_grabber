@@ -1,5 +1,7 @@
 package ru.job4j.grabber;
 
+import java.util.Objects;
+
 public class Post {
     private String name;
     private String text;
@@ -36,5 +38,25 @@ public class Post {
 
     public void setCreated(String created) {
         this.created = created;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Post post = (Post) o;
+        return Objects.equals(name, post.name)
+                && Objects.equals(text, post.text)
+                && Objects.equals(link, post.link)
+                && Objects.equals(created, post.created);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, text, link, created);
     }
 }
