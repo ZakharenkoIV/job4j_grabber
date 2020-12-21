@@ -20,7 +20,11 @@ public class SqlRuParse implements Parse {
                 "#content-wrapper-forum > table.forumTable > tbody > tr:gt(0)");
         for (Element td : tdElements) {
             if (!td.child(1).text().startsWith("Важно:")) {
-                allPosts.add(detail(td.child(1).child(0).attr("href")));
+                Post post = detail(td.child(1).child(0).attr("href"));
+                if (post.getName().toLowerCase().matches(".*\\bjava\\b.*")
+                        || post.getText().toLowerCase().matches(".*\\bjava\\b.*")) {
+                    allPosts.add(post);
+                }
             }
         }
         return allPosts;

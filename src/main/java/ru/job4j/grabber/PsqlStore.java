@@ -1,7 +1,5 @@
 package ru.job4j.grabber;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.*;
 import java.util.LinkedList;
 import java.util.List;
@@ -79,23 +77,5 @@ public class PsqlStore implements Store, AutoCloseable {
         if (cnn != null) {
             cnn.close();
         }
-    }
-
-    public static void main(String[] args) throws SQLException {
-        Properties cfg = new Properties();
-        try (FileInputStream in = new FileInputStream(
-                "./src/main/resources/grabber.properties")) {
-            cfg.load(in);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        PsqlStore psqlStore = new PsqlStore(cfg);
-        // Post post1 = new SqlRuParse().detail("https://www.sql.ru/forum/1323839/razrabotchik-java-g-kazan");
-        // Post post2 = new SqlRuParse().detail("https://www.sql.ru/forum/1315877/postgresql-dba");
-        //  psqlStore.save(post1);
-        //  psqlStore.save(post2);
-        System.out.println(psqlStore.getAll().get(0).equals(psqlStore.findById("11")));
-        System.out.println(psqlStore.getAll().get(1).equals(psqlStore.findById("12")));
-
     }
 }
