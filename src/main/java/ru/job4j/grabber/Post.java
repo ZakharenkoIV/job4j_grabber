@@ -59,4 +59,13 @@ public class Post {
     public int hashCode() {
         return Objects.hash(name, text, link, created);
     }
+
+    @Override
+    public String toString() {
+        return "1) " + name + System.lineSeparator()
+                + "2) " + text + System.lineSeparator()
+                + "3) " + link + System.lineSeparator()
+                + "4) " + created + System.lineSeparator()
+                + "_____________________________________" + System.lineSeparator();
+    }
 }
